@@ -7,7 +7,8 @@
  * Return: On success 1.
  */
 
-int _putchar(char c)
+void _putchar()
 {
-	return (write(1, &c, 1));
+	char str[] = "_putchar\n";
+	write(1, str, sizeof(str) - 1);	
 }
