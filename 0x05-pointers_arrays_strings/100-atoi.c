@@ -6,46 +6,41 @@
  *
  * Return: the int converted from the string
  */
-int _atoi(char *s) {
-    int result = 0;
-    int sign = 1;
-    bool number_found = false;
-    
-    // Skip leading whitespaces
-    while (*s == ' ')
-        s++;
-    
-    // Check for sign
-    if (*s == '-') {
-        sign = -1;
-        s++;
-    } else if (*s == '+') {
-        s++;
-    }
-    
-    // Convert string to integer
-    while (*s != '\0') {
-        if (*s >= '0' && *s <= '9') {
-            number_found = true;
-            int digit = *s - '0';
-            
-            // Check for overflow
-            if (result > (INT_MAX - digit) / 10) {
-                if (sign == -1)
-                    return INT_MIN;
-                else
-                    return INT_MAX;
-            }
-            
-            result = result * 10 + digit;
-        } else {
-            // Stop if non-numeric character is encountered after number
-            if (number_found)
-                break;
-        }
-        
-        s++;
-    }
-    
-    return (0);
+int _atoi(char *s)
+{
+	int i, d, n, len, f, digit;
+
+	i = 0;
+	d = 0;
+	n = 0;
+	len = 0;
+	f = 0;
+	digit = 0;
+
+	while (s[len] != '\0')
+		len++;
+
+	while (i < len && f == 0)
+	{
+		if (s[i] == '-')
+			++d;
+
+		if (s[i] >= '0' && s[i] <= '9')
+		{
+			digit = s[i] - '0';
+			if (d % 2)
+				digit = -digit;
+			n = n * 10 + digit;
+			f = 1;
+			if (s[i + 1] < '0' || s[i + 1] > '9')
+				break;
+			f = 0;
+		}
+		i++;
+	}
+
+	if (f == 0)
+		return (0);
+
+	return (n);
 }
